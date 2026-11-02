@@ -840,20 +840,18 @@ document.addEventListener('DOMContentLoaded', function () {
 /* CHI THAY BACKGROUND: giu nguyen toan bo giao dien va logic */
 html, body { min-height:100%; }
 body {
-    background: linear-gradient(-45deg, #fdf6ec, #faebd7, #f5deb3, #e5c77d);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    /* Giữ lại ảnh nền cũ của bạn nhưng thêm hiệu ứng động */
+    background: #fff7eb url("data:image/svg+xml,...") no-repeat center center fixed; /* Hoặc link ảnh của bạn */
+    background-size: cover;
+    animation: bgZoom 20s ease-in-out infinite alternate;
 }
 
-@keyframes gradientBG {
+@keyframes bgZoom {
     0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
+        transform: scale(1);
     }
     100% {
-        background-position: 0% 50%;
+        transform: scale(1.08); /* Phóng to nhẹ nhàng rồi thu lại */
     }
 }
 /* Nen man hinh dang nhap dung cung anh */
