@@ -284,7 +284,15 @@ button,input,select,textarea{font-size:14px;line-height:1.45;}
 <section class="page" id="myrequests"><div class="grid two"><div class="card"><div class="headrow"><h3>Gửi đơn nghỉ phép / tăng ca / phụ cấp</h3></div><form id="requestForm"><div class="field"><label>LOẠI ĐƠN</label><select id="reqType"><option>Nghỉ phép</option><option>Tăng ca</option><option>Phụ cấp</option></select></div><div class="field"><label>NGÀY ÁP DỤNG</label><input id="reqDate" type="date" required></div><div class="field"><label>SỐ GIỜ TĂNG CA (nếu có)</label><input id="reqHours" type="number" min="0" step="0.5" value="0"></div><div class="field"><label>SỐ TIỀN PHỤ CẤP (nếu có, VNĐ)</label><input id="reqAllowance" type="number" min="0" step="1000" value="0"></div><div class="field"><label>LÝ DO / GHI CHÚ</label><input id="reqNote" placeholder="Nhập nội dung đơn" required></div><button class="goldbtn" type="submit">Gửi đơn</button></form></div><div class="card"><div class="headrow"><h3>Đơn đã gửi của tôi</h3><span class="tag warn" id="myReqCount">0 đơn</span></div><div style="overflow:auto"><table><thead><tr><th>LOẠI ĐƠN</th><th>NGÀY</th><th>CHI TIẾT</th><th>TRẠNG THÁI</th></tr></thead><tbody id="myReqRows"><tr><td colspan="4">Chưa có đơn.</td></tr></tbody></table></div></div></div></section>
 <section class="page" id="payroll"><div class="card"><div class="headrow"><div><h3>Bảng tính lương cuối tháng</h3><p>Tính theo công thực tế, đơn tăng ca/phụ cấp đã duyệt và mức lương cấu hình cho từng nhân viên</p></div><button class="goldbtn" id="calcPayroll">Tính lương tháng</button></div><div class="grid stats" style="grid-template-columns:repeat(3,1fr)"><div class="card stat"><div><div class="statlabel">Tổng nhân viên</div><div class="statnum" id="payPeople">0</div></div></div><div class="card stat"><div><div class="statlabel">Tổng ngày công</div><div class="statnum" id="payDays">0</div></div></div><div class="card stat"><div><div class="statlabel">Tổng lương dự kiến</div><div class="statnum" id="payTotal">0</div></div></div></div><div style="overflow:auto"><table><thead><tr><th>NHÂN VIÊN</th><th>BỘ PHẬN</th><th>NGÀY CÔNG</th><th>TĂNG CA</th><th>PHỤ CẤP</th><th>LƯƠNG CƠ BẢN</th><th>THỰC LĨNH</th></tr></thead><tbody id="payRows"><tr><td colspan="7">Nhấn “Tính lương tháng” để tổng hợp.</td></tr></tbody></table></div><div class="notice">Công thức demo: lương cơ bản tháng / 26 × ngày công + tiền tăng ca (lương giờ × 1,5 × giờ tăng ca) + phụ cấp đã duyệt. Đây là số liệu giả lập, cần HR xác nhận mức lương và quy định thực tế trước khi chi trả.</div></div></section>
 
-<footer style="text-align:center;color:#b3a184;font-size:9px;margin-top:24px">VKSTAR · SMART ATTENDANCE · TO-BE WORKFLOW</footer>
+<footer class="vk-footer">
+<div class="vk-ft-grid">
+<div class="vk-ft-col"><h4>Về VKSTAR</h4><p class="vk-ft-brand">CÔNG TY CỔ PHẦN VKSTAR</p><p class="vk-ft-slogan">ÁO DÀI SHOW · FASTER STRONGER ✧</p><p>Hệ thống chấm công thông minh, giúp theo dõi thời gian làm việc và quản lý nhân sự hiệu quả hơn.</p></div>
+<div class="vk-ft-col"><h4>Chức năng</h4><ul><li><a href="#" data-goto="dashboard">Tổng quan</a></li><li><a href="#" data-goto="checkin">Chấm công AI</a></li><li><a href="#" data-goto="reports">Báo cáo &amp; bảng công</a></li><li><a href="#" data-goto="myrequests">Đơn của tôi</a></li></ul></div>
+<div class="vk-ft-col"><h4>Liên hệ</h4><ul><li>Tel: <a href="tel:02363885886">0236 3885 886</a> - <a href="tel:02363887889">0236 3887 889</a></li><li>Email: <a href="mailto:aodaishow@vkstar.com">aodaishow@vkstar.com</a></li><li>Địa chỉ: 1A Trần Văn Đán, Khuê Mỹ, Ngũ Hành Sơn, Đà Nẵng, Việt Nam</li></ul><h4 class="vk-ft-sub">Kết nối với chúng tôi</h4><div class="vk-ft-social"><a href="https://fb.com/aodaishow.vn" target="_blank" rel="noopener" title="Fanpage"><i>f</i>Fanpage</a></div></div>
+<div class="vk-ft-col"><h4>Hotline</h4><ul class="vk-ft-hot"><li><span class="vk-ft-lang">English</span><a href="tel:0911458889">091 145 8889</a> - <a href="tel:0909169998">0909 169 998</a></li><li><span class="vk-ft-lang">Korean</span><a href="tel:0766338889">0766 338 889</a> - <a href="tel:0909169998">0909 169 998</a> - <a href="tel:0799812288">0799 812 288</a></li><li><span class="vk-ft-lang">Vietnamese</span><a href="tel:0773779998">0773 779 998</a> - <a href="tel:0708568889">0708 568 889</a> - <a href="tel:0707578889">0707 578 889</a></li></ul></div>
+</div>
+<div class="vk-ft-copy">© 2026 CÔNG TY CỔ PHẦN VKSTAR · Áo dài Show — Smart Attendance</div>
+</footer>
 </main></div>
 
 <div class="modal" id="evidenceModal"><div class="modalbox"><div class="headrow"><h3>Ảnh bằng chứng chấm công</h3><button class="smallbtn" onclick="modal(false)">Đóng</button></div><div id="modalcontent"></div></div></div><div class="toast" id="toast"></div>
@@ -822,7 +830,27 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-
+<style id="vkstar-footer">
+.vk-footer{--ft-bg:linear-gradient(135deg,#5a3d12,#8a6424);--ft-text:#fff3dc;--ft-line:rgba(255,243,220,.35);
+  margin-top:34px;border-radius:18px 18px 0 0;background:var(--ft-bg);color:var(--ft-text);padding:30px 34px 0;font-size:14px;line-height:1.6;text-align:left}
+.vk-ft-grid{display:grid;grid-template-columns:1.2fr .9fr 1.4fr 1.3fr;gap:34px}
+.vk-footer h4{margin:0 0 14px;padding-bottom:10px;font-size:16px;font-weight:700;color:#fff;border-bottom:1px dashed var(--ft-line)}
+.vk-footer h4.vk-ft-sub{margin-top:18px}
+.vk-footer p{margin:0 0 8px}
+.vk-footer .vk-ft-brand{font-weight:700;letter-spacing:.5px}
+.vk-footer .vk-ft-slogan{font-style:italic;color:#ffd98a}
+.vk-footer ul{list-style:none;margin:0;padding:0}
+.vk-footer li{margin:0 0 8px}
+.vk-footer .vk-ft-lang{display:block;font-weight:700;color:#ffd98a}
+.vk-footer a{color:var(--ft-text);text-decoration:none}
+.vk-footer a:hover{color:#fff;text-decoration:underline}
+.vk-ft-social{display:flex;flex-wrap:wrap;gap:10px 18px}
+.vk-ft-social a{display:flex;align-items:center;gap:8px}
+.vk-ft-social i{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid var(--ft-line);font-style:normal;font-size:13px;font-weight:700;background:rgba(255,255,255,.08)}
+.vk-ft-copy{margin-top:22px;padding:16px 0 18px;border-top:1px solid var(--ft-line);font-size:13px}
+@media(max-width:1100px){.vk-ft-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.vk-ft-grid{grid-template-columns:1fr}.vk-footer{padding:24px 20px 0}}
+</style>
 <style id="vkstar-background-only-override">
 /* CHI THAY BACKGROUND: giu nguyen toan bo giao dien va logic */
 html, body { min-height:100%; }
@@ -848,6 +876,17 @@ body {
 #app { background: transparent !important; }
 #app .main { background: transparent !important; }
 </style>
+<script>
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('.vk-footer a');
+  if(!a) return;
+  var p=a.getAttribute('data-goto');
+  if(!p) return;
+  e.preventDefault();
+  var b=document.querySelector('#nav [data-page="'+p+'"]');
+  if(b&&b.offsetParent!==null){b.click();window.scrollTo({top:0,behavior:'smooth'});}
+});
+</script>
 </body></html><script>
 // VKSTAR V9: employee privacy + more responsive blink challenge before face verification.
 (function(){
