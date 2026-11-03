@@ -96,7 +96,17 @@ body:after{content:"蓮";position:fixed;right:-22px;bottom:-105px;font-family:se
 #app .nav button.active,#app .nav button:hover{background:linear-gradient(105deg,#c18b29,#e5bf68);color:white;box-shadow:0 6px 15px #b8862c33}
 #app .sidefoot{padding:13px 3px 0;border-color:#eadcc3}
 #app .main{max-width:none;width:calc(100% - 153px);padding:14px 24px 30px;overflow:hidden}
-#app .top{height:112px;margin-bottom:14px;border-bottom:1px solid #c79625;align-items:center}
+#app .top {
+    height: 112px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #c79625;
+    display: flex;             /* Bắt buộc có để align-items hoạt động */
+    align-items: center;       /* Căn giữa theo chiều dọc */
+    justify-content: space-between; /* Đẩy tiêu đề và nút Đăng xuất sang 2 bên */
+    width: 100%;               /* Trải dài full màn hình */
+    box-sizing: border-box;    /* Tránh bị tràn kích thước */
+    padding: 0 24px;           /* Khoảng đệm 2 bên lề cho đẹp */
+}
 #app .slogan{font:italic 20px Times New Roman,serif;color:#bf913c;margin:0 0 8px 14px}
 #app .slogan small{font:8px "Segoe UI",sans-serif;letter-spacing:2px}
 #app .heading h1{font:bold 27px Times New Roman,serif;color:#30271f;margin:4px 0}
