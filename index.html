@@ -1155,3 +1155,90 @@ function runTestSuites() {
   resize(); reduce?drawAll():start();
 })();
 </script>
+<script id="vk-leave-approval">
+/* Trưởng ca: mục menu riêng "Duyệt đơn từ" – quản lý đơn nghỉ phép / tăng ca / phụ cấp */
+(function(){
+  var FILTER='pending', PAGE_ID='leaverequests';
+  function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function fm(n){return Number(n||0).toLocaleString('vi-VN')+' ₫';}
+  function detail(r){
+    var p=[];
+    if(r.type==='Tăng ca') p.push('Số giờ: '+Number(r.hours||0));
+    if(r.type==='Phụ cấp') p.push('Số tiền: '+fm(r.allowance));
+    if(r.note) p.push('Lý do: '+esc(r.note));
+    return p.join('<br>')||'—';
+  }
+  function tagClass(st){return st==='Chờ duyệt'?'warn':(st==='Từ chối'?'bad':'');}
+
+  /* 1) Tạo trang riêng + nút menu riêng */
+  var sec=document.getElementById(PAGE_ID);
+  if(!sec){
+    sec=document.createElement('section'); sec.className='page'; sec.id=PAGE_ID;
+    sec.innerHTML='<div class="card"><div class="headrow"><div><h3>Đơn nghỉ phép / tăng ca / phụ cấp</h3><p>Đơn do nhân viên gửi. Trưởng ca xem lý do, chi tiết rồi duyệt hoặc từ chối.</p></div><span class="tag warn" id="leavePendingCount">0 đơn chờ duyệt</span></div>'
+      +'<div class="field" style="max-width:220px;margin:0 0 12px"><label for="leaveFilter">LỌC THEO TRẠNG THÁI</label><select id="leaveFilter"><option value="pending">Chờ duyệt</option><option value="done">Đã xử lý</option><option value="all">Tất cả</option></select></div>'
+      +'<div style="overflow:auto"><table><thead><tr><th>NHÂN VIÊN</th><th>LOẠI ĐƠN</th><th>NGÀY ÁP DỤNG</th><th>CHI TIẾT</th><th>TRẠNG THÁI</th><th>THAO TÁC</th></tr></thead><tbody id="leaveRows"></tbody></table></div></div>';
+    var anchor=document.getElementById('payroll')||document.getElementById('requests');
+    if(anchor) anchor.insertAdjacentElement('afterend',sec); else document.querySelector('main.main').appendChild(sec);
+    document.getElementById('leaveFilter').addEventListener('change',function(e){FILTER=e.target.value;render();});
+  }
+  var nav=document.getElementById('nav');
+  if(nav&&!nav.querySelector('[data-page="'+PAGE_ID+'"]')){
+    var nb=document.createElement('button'); nb.setAttribute('data-page',PAGE_ID);
+    nb.innerHTML='<span class="ico">✉</span>Duyệt đơn từ';
+    var after=nav.querySelector('[data-page="requests"]');
+    if(after&&after.nextSibling) nav.insertBefore(nb,after.nextSibling); else nav.appendChild(nb);
+  }
+  if(typeof names!=='undefined') names[PAGE_ID]='Đơn nghỉ phép, tăng ca & phụ cấp';
+
+  /* 2) Vẽ danh sách đơn */
+  function render(){
+    if(typeof current==='undefined'||!current||current.key!=='supervisor') return;
+    var all=(typeof reqs!=='undefined'&&reqs)?reqs:[];
+    document.getElementById('leavePendingCount').textContent=all.filter(function(r){return r.status==='Chờ duyệt';}).length+' đơn chờ duyệt';
+    var list=all.filter(function(r){
+      if(FILTER==='pending') return r.status==='Chờ duyệt';
+      if(FILTER==='done') return r.status!=='Chờ duyệt';
+      return true;
+    });
+    document.getElementById('leaveRows').innerHTML=list.length?list.map(function(r){
+      var act=r.status==='Chờ duyệt'
+        ?'<button class="smallbtn" onclick="decideRequest(\''+esc(r.id)+'\',true)">Duyệt</button> <button class="smallbtn" onclick="decideRequest(\''+esc(r.id)+'\',false)">Từ chối</button>'
+        :(r.decidedBy?'<small>'+esc(r.decidedBy)+(r.decidedAt?'<br>'+new Date(r.decidedAt).toLocaleString('vi-VN'):'')+'</small>':'—');
+      return '<tr><td>'+esc(r.name)+'<small style="display:block;color:#987">'+esc(r.dept||'')+'</small></td><td>'+esc(r.type)+'</td><td>'+esc(r.date)+'</td><td>'+detail(r)+'</td><td><span class="tag '+tagClass(r.status)+'">'+esc(r.status)+'</span></td><td>'+act+'</td></tr>';
+    }).join(''):'<tr><td colspan="6">'+(FILTER==='pending'?'Không có đơn nào đang chờ duyệt.':'Chưa có đơn.')+'</td></tr>';
+  }
+
+  /* 3) Duyệt / từ chối: ghi người duyệt + thời gian, giữ nguyên chữ trạng thái để bảng lương đọc đúng */
+  window.decideRequest=function(id,ok){
+    if(!current||current.key!=='supervisor'){toast('Chỉ Trưởng ca được duyệt đơn.');return;}
+    var r=reqs.find(function(x){return x.id===id;});
+    if(!r||r.status!=='Chờ duyệt') return;
+    r.status=ok?'Đã duyệt':'Từ chối'; r.decidedBy=current.name; r.decidedAt=new Date().toISOString();
+    saveExtended(); render(); toast(ok?'Đã duyệt đơn.':'Đã từ chối đơn.');
+  };
+
+  /* 4) Trang "Phê duyệt chấm công" chỉ còn hồ sơ khuôn mặt: bỏ các dòng đơn từ cũ bị chèn lẫn */
+  var prevCases=window.renderCases;
+  window.renderCases=function(){
+    if(typeof prevCases==='function') prevCases.apply(this,arguments);
+    var body=document.getElementById('requestrows');
+    if(body) Array.prototype.slice.call(body.querySelectorAll('tr')).forEach(function(tr){
+      if(tr.innerHTML.indexOf('decideRequest')>-1) tr.parentNode.removeChild(tr);
+    });
+  };
+
+  /* 5) Cấp quyền trang mới cho Trưởng ca (nhân viên và Nhân sự không có) */
+  function grant(){
+    if(typeof current!=='undefined'&&current&&current.key==='supervisor'&&current.pages.indexOf(PAGE_ID)<0) current.pages.push(PAGE_ID);
+  }
+  var prevNav=window.setNav;
+  window.setNav=function(){grant(); if(typeof prevNav==='function') return prevNav.apply(this,arguments);};
+  var prevPage=window.page;
+  window.page=function(id){
+    grant();
+    var out=typeof prevPage==='function'?prevPage.apply(this,arguments):undefined;
+    if(id===PAGE_ID) render();
+    return out;
+  };
+})();
+</script>
