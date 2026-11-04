@@ -611,6 +611,7 @@ const oldDashboardText=$('#dashboard').querySelector('.stats');if(oldDashboardTe
  const priorRenderEmployees=renderEmployees;
  renderEmployees=function(){if(current?.key==='supervisor'){const body=el('employees')?.querySelector('tbody');if(body)body.innerHTML=staff.filter(x=>x.dept===current.dept&&['employee','roster'].includes(x.role)).map(x=>`<tr><td>${esc4(x.name)}</td><td>${esc4(x.user)}</td><td>Nhân viên</td><td>${esc4(x.dept)}</td><td><img class="evidence-img" src="${x.photo||''}" alt="Ảnh nhân viên"></td><td><span class="tag">${x.photo?'Đã có hồ sơ':'Chưa có ảnh'}</span></td></tr>`).join('');}else if(current?.key==='hr'&&priorRenderEmployees)priorRenderEmployees();};
  // Shift rate rules (VNĐ per completed shift).
+  window.rateInfo=rateInfo; /* mở ra toàn cục để hàm tính lương ở script sau gọi được */
  function rateInfo(x){
    const d=x.dept;
    if(d==='Lễ tân')return {rate:150000,hours:4,label:'150.000 / 4 giờ'};
